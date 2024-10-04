@@ -1,0 +1,5 @@
+{
+  "files": [],
+  "references": [{ "path": "./first-module" }],
+  "exclude": ["node_modules"]
+}

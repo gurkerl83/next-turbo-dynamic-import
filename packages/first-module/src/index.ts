@@ -1,0 +1,1 @@
+export { SimpleComponent } from "./SimpleComponent";

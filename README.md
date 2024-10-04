@@ -1,40 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Project - Reproducing Turbopack Hydration Error with Dynamic Imports
+
+This project demonstrates a **hydration error** when using **Turbopack** with dynamically imported named exports in components.
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies using **pnpm**:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Running the Development Server
+To run the project using the default Webpack configuration:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Running with Turbopack
+To run the project using Turbopack, use the following command:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+pnpm dev:turbo
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This uses the faster Turbopack build system, but you'll observe issues with hydration when using dynamic imports with named exports.
 
-## Learn More
+## Observation
 
-To learn more about Next.js, take a look at the following resources:
+### Using Webpack (pnpm dev):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- The application works correctly.
+- Both dynamically imported components render as expected, including the one with the indirect named export.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Using Turbopack (pnpm dev:turbo):
 
-## Deploy on Vercel
+- The component using the indirect named export (module.SimpleComponent) causes an unexpected hydration error.
+- This error is not expected behavior and may indicate a limitation or bug in how Turbopack handles named exports in dynamic imports.
+- Specifically, using .then() to access a named export in a dynamic import seems to lead to issues with hydration, resulting in a mismatch between the server-rendered HTML and the client-side React tree.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Accessing the App
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Once the development server is running (using either Webpack or Turbopack), open your browser and visit:
+
+http://localhost:3000

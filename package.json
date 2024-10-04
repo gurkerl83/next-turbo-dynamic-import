@@ -3,20 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "clean": "rimraf dist && rimraf .next",
+    "dev": "pnpm clean && pnpm next dev",
+    "dev:turbo": "pnpm clean && pnpm next dev --turbo",
+    "build": "pnpm clean && next build",
+    "start": "next start"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.14"
+    "@module/first": "workspace:*",
+    "next": "15.0.0-canary.177",
+    "react": "19.0.0-rc-0751fac7-20241002",
+    "react-dom": "19.0.0-rc-0751fac7-20241002"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/node": "^22.7.4",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=20.x",
+    "pnpm": ">=9.11.x",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
   }
 }
